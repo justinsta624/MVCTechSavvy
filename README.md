@@ -148,7 +148,7 @@ This application can be used in conjunction with licensing covered in  <b>MIT Li
 ## Review
 
 * The URL of the functional, deployed application.
-* The URL of the GitHub repository. Give the repository a unique name and include a README describing the project.
+* The URL of the GitHub repository. Give a unique name & README describing the project.
 
 ---
 
