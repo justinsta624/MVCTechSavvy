@@ -61,8 +61,6 @@ SO THAT I can publish articles, blog posts, and my thoughts and opinions
 
 ## User Acceptance Criteria <a ID="user-acceptance-criteria"></a>
 
-### This server was developed with the below User acceptance criteria:
-
 ```
 GIVEN a CMS-style blog site
 
@@ -129,8 +127,6 @@ update, or delete posts
 
 This application can be used in conjunction with licensing covered in  <b>MIT License</b>
 
-(Click on the badge for details of the license)
-
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Technologies used <a ID="technologies-used"></a>
@@ -148,6 +144,11 @@ This application can be used in conjunction with licensing covered in  <b>MIT Li
 - **Nodemon**: Development tool for auto-reloading the server during development.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Review
+
+* The URL of the functional, deployed application.
+* The URL of the GitHub repository. Give the repository a unique name and include a README describing the project.
 
 ---
 
