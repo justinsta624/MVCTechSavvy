@@ -19,10 +19,10 @@ const handleSignUp = async (event) => {
             document.location.replace('/dashboard'); // Redirect to the dashboard or another page
         } else {
             // If there's an error, alert the user
-            alert('Failed to sign up. Please try again.');
+            alert('Error has occurred');
         }
     } catch (err) {
-        console.error('Error signing up:', err);
+        console.error('Error has occurred', err);
     }
 };
 
@@ -47,10 +47,10 @@ const handleLogin = async (event) => {
             document.location.replace('/dashboard'); // Redirect to the dashboard or another page
         } else {
             // If there's an error, alert the user
-            alert('Failed to log in. Please check your username and password.');
+            alert('Error has occurred');
         }
     } catch (err) {
-        console.error('Error logging in:', err);
+        console.error('Error has occurred', err);
     }
 };
 
@@ -68,10 +68,10 @@ const handleLogout = async () => {
             document.location.replace('/'); // Redirect to the homepage or another page
         } else {
             // If there's an error, alert the user
-            alert('Failed to log out. Please try again.');
+            alert('Error has occurred');
         }
     } catch (err) {
-        console.error('Error logging out:', err);
+        console.error('Error has occurred', err);
     }
 };
 
