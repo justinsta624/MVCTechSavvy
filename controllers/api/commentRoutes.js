@@ -1,7 +1,7 @@
 // Importing the Express framework and required models and utilities
 const router = require('express').Router();
 const { Comment } = require('../../models'); // Importing the Sequelize model for Comment
-const withAuth = require('../utils/auth'); // Importing authentication middleware
+const withAuth = require('../../utils/auth'); // Importing authentication middleware
 
 // Create a new comment on a blog post
 router.post('/:post_id', withAuth, async (req, res) => {
