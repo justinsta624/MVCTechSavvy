@@ -22,7 +22,7 @@ router.post('/', async (req, res) => {
     }
 });
 
-// Login route 
+// Log in route 
 router.post('/login', async (req, res) => {
     try {
         // Check if the username entered matches one in the database
@@ -58,7 +58,7 @@ router.post('/login', async (req, res) => {
     }
 });
 
-// Logout route
+// Log out route
 router.post('/logout', (req, res) => {
     if (req.session.logged_in) {
         // If the user is logged in, destroy the session to log them out
