@@ -1,2 +1,2 @@
-DROP DATABASE IF EXISTS MVCTechSavvy_db;
-CREATE DATABASE MVCTechSavvy_db;
+DROP DATABASE IF EXISTS mvctechsavvy_db;
+CREATE DATABASE mvctechsavvy_db;
