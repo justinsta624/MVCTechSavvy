@@ -1,6 +1,6 @@
 // Importing the Express framework and required models and utilities
 const router = require('express').Router();
-const { Blog } = require('../models'); // Importing the Sequelize model for Blog
+const { Blog } = require('../../models'); // Importing the Sequelize model for Blog
 const withAuth = require('../utils/auth'); // Importing authentication middleware
 
 // Create a new blog post
