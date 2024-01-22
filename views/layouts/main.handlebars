@@ -2,39 +2,59 @@
 <html lang="en">
 
 <head>
+  <!-- Meta tags for character set, compatibility, and viewport -->
   <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MVC Tech Blog</title>
-  <link rel="stylesheet" href="/stylesheets/style.css">
+
+  <!-- Title of the webpage -->
+  <title> ⭐ MVC Tech Savvy ⭐ </title>
+
+  <!-- Link to the external stylesheet for styling -->
+  <link rel="stylesheet" href="/public/css/style.css">
 </head>
 
 <body>
+  <!-- Wrapper to contain the entire content of the webpage -->
   <div class="wrapper">
+
+    <!-- Header section containing navigation and site title -->
     <header>
       <div>
+        <!-- Navigation links -->
         <nav>
           <a href="/">Home</a>
           <a href="/dashboard">Dashboard</a>
+
+          <!-- Conditional rendering based on user login status -->
           {{#if loggedIn}}
-          <a href="/" id="logout">Logout</a>
+          <a href="/" id="logout">Signout</a>
           {{else}}
-          <a href="/login">Login</a>
+          <a href="/login">Signin</a>
           {{/if}}
         </nav>
       </div>
+
+      <!-- Site title -->
       <div>
-        <h1 class="home-title">MVC Tech Blog</h1>
+        <h1 class="home-title"> ⭐ MVC Tech Savvy ⭐ </h1>
       </div>
     </header>
+
+    <!-- Main content of the webpage -->
     <main>
       {{{ body }}}
     </main>
+
+    <!-- Footer section -->
     <footer>
-      Thanks for visiting!
+      Welcome to our website, have a good time!
     </footer>
   </div>
+
+  <!-- Script inclusion based on user login status -->
   {{#if loggedIn}}
-  <script src="/javascript/logout.js"></script>
+  <script src="/public/js/signoutUser.js"></script>
   {{/if}}
 </body>
 
