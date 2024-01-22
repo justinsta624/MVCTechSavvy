@@ -5,32 +5,35 @@ const withAuth = require('../../utils/auth'); // Importing authentication middle
 
 // get all Blogs
 router.get('/', (req, res) => {
+  // Retrieve all blog posts with associated user and comments
   Blog.findAll({
     attributes: ['id', 'title', 'post_text', 'created_at'],
-    order: [['created_at', 'DESC']],
+    order: [['created_at', 'DESC']], // Order by creation date in descending order
     include: [
       {
-        model: User,
+        model: User, // Include the User model to get information about the author
         attributes: ['username']
       },
       {
-        model: Comment,
+        model: Comment, // Include the Comment model to get associated comments
         attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
         include: {
-          model: User,
+          model: User, // Include the User model for each comment to get the username
           attributes: ['username']
         }
       }
     ]
   })
-    .then(dbPostData => res.json(dbPostData))
+    .then(dbPostData => res.json(dbPostData)) // Respond with the retrieved data in JSON format
     .catch(err => {
       console.log(err);
-      res.status(500).json(err);
+      res.status(500).json(err); // Handle errors by sending a 500 Internal Server Error response
     });
 });
 
+// get a specific Blog by ID
 router.get('/:id', (req, res) => {
+  // Retrieve a specific blog post by ID with associated user and comments
   Blog.findOne({
     where: {
       id: req.params.id
@@ -38,14 +41,14 @@ router.get('/:id', (req, res) => {
     attributes: ['id', 'title', 'post_text', 'created_at'],
     include: [
       {
-        model: User,
+        model: User, // Include the User model to get information about the author
         attributes: ['username']
       },
       {
-        model: Comment,
+        model: Comment, // Include the Comment model to get associated comments
         attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
         include: {
-          model: User,
+          model: User, // Include the User model for each comment to get the username
           attributes: ['username']
         }
       }
@@ -53,14 +56,14 @@ router.get('/:id', (req, res) => {
   })
     .then(dbPostData => {
       if (!dbPostData) {
-        res.status(404).json({ message: 'No post found with this id' });
+        res.status(404).json({ message: 'No post found with this id' }); // Respond with a 404 Not Found status if no post is found
         return;
       }
-      res.json(dbPostData);
+      res.json(dbPostData); // Respond with the retrieved data in JSON format
     })
     .catch(err => {
       console.log(err);
-      res.status(500).json(err);
+      res.status(500).json(err); // Handle errors by sending a 500 Internal Server Error response
     });
 });
 
@@ -70,7 +73,7 @@ router.post('/', withAuth, async (req, res) => {
     // Create a new blog post associated with the currently authenticated user
     const newBlog = await Blog.create({
       title: req.body.title,
-      content: req.body.content,
+      post_text: req.body.content, // Corrected field name from 'content' to 'post_text'
       user_id: req.session.user_id,
     });
 
@@ -89,7 +92,7 @@ router.put('/:id', withAuth, async (req, res) => {
     const updatedBlog = await Blog.update(
       {
         title: req.body.title,
-        content: req.body.content,
+        post_text: req.body.content, // Corrected field name from 'content' to 'post_text'
       },
       {
         // Using req.params.id to identify a specific post, user_id: req.session.user_id to ensure that only the posts owned by the currently authenticated user are eligible for updating
