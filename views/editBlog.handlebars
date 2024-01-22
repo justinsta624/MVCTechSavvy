@@ -1,0 +1,41 @@
+<section>
+  <h2>Create New Post</h2>
+
+  <form class="new-post-form">
+    <div>
+      <label for="post-title">Title</label>
+      <input type="text" id="post-title" name="post-title" />
+    </div>
+    <div>
+      <label for="post-text">Post</label>
+      <textarea id="post-text" name="post-text"></textarea>
+    </div>
+    <button type="submit" class="btn">Create</button>
+  </form>
+</section>
+
+<script src="/javascript/add-post.js"></script>
+
+<article>  
+  <h2>
+    Edit Post
+  </h2>
+  <form class="edit-post-form">
+    <div>
+      <input name="post-title" type="text" value="{{post.title}}" />      
+    </div>
+    <div>
+      Posted by you on {{format_date post.created_at}}
+      |
+      {{post.comments.length}} {{format_plural "comment" post.comments.length}}
+    </div>
+    <div>
+      <label for="post-text">Post</label>
+      <textarea id="post-text" name="post-text">{{post.post_text}}</textarea>
+    </div>
+    <button type="submit">Save Changes</button>
+    <button type="button" class="delete-post-btn">Delete Post</button>
+  </form>
+</article>
+
+<script src="../public/js/userboard.js"></script>
