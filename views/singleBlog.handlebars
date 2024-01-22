@@ -1,0 +1,26 @@
+{{post-info post}}
+
+<!-- Check if the user is logged in -->
+{{#if loggedIn}}
+<!-- Comment Form -->
+<form class="comment-form">
+    <!-- Textarea for entering a comment -->
+    <div>
+        <textarea name="comment-body"></textarea>
+    </div>
+
+    <!-- Submit Button for adding a comments -->
+    <div>
+        <button type="submit">Add Comments</button>
+    </div>
+</form>
+{{/if}}
+
+<!-- Display comments for the post -->
+{{comments post.comments}}
+
+<!-- Check if the user is logged in -->
+{{#if loggedIn}}
+<!-- JavaScript File Inclusion for handling comments -->
+<script src="/public/js/comment.js"></script>
+{{/if}}
