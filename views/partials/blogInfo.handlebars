@@ -1,0 +1,24 @@
+<article class="post">
+    <!-- Post Header Section -->
+    <div class="post-head">
+        <!-- Post Title Div -->
+        <div class="title">
+            <!-- Post Title Link -->
+            <a href="/post/{{id}}">{{title}}</a>
+        </div>
+
+        <!-- Meta Information Div -->
+        <div class="meta">
+            <!-- Posted By Information -->
+            Posted By {{user.username}} on {{format_date created_at}} |
+
+            <!-- Comment Information -->
+            {{comments.length}} {{format_plural "comment" comments.length}}
+        </div>
+    </div>
+
+    <!-- Post Text Div -->
+    <div class="post-text">
+        {{post_text}}
+    </div>
+</article>
