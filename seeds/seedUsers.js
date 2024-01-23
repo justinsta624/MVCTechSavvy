@@ -35,7 +35,7 @@ const userData = [
         name: 'Inactive User',
         username: 'inactive',
         email: 'Inactive.User@gmail.com',
-        password: '$2b$Inactive.User@gmail.com',
+        password: 'Inactive.User@gmail.com',
         active_ind: '0'
     },
 ];
