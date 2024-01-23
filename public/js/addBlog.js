@@ -18,7 +18,7 @@ async function newFormHandler(event) {
             'Content-Type': 'application/json' // Specify the content type as JSON
         }
     });
-
+    // tester
     // Check if the response status is okay (HTTP status code 200-299)
     if (response.ok) {
         // If successful, redirect the user to the dashboard page
