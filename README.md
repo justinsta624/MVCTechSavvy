@@ -19,7 +19,7 @@
 Followings are the outcomes of the challenge 14:
 
 * The URL of the functional, deployed application </br>
-[URL of deployed application](https://dashboard.heroku.com/apps/polar-journey-77005) </br>
+[URL of deployed application](https://polar-journey-77005-c598f31c0871.herokuapp.com/) </br>
 
 * The URL of the GitHub repository, with a unique name and a README describing the project </br>
 [Repository for this challenge](https://github.com/justinsta624/MVCTechSavvy)
