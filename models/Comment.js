@@ -42,12 +42,12 @@ Comment.init(
                 key: 'user_id',
             },
         },
-        // Defining the 'blog_id' attribute as an integer and setting up a foreign key relationship with the 'blog' model
-        blog_id: {
+        // Defining the 'post_id' attribute as an integer and setting up a foreign key relationship with the 'post' model
+        post_id: {
             type: DataTypes.INTEGER,
             references: {
-                model: 'blog',
-                key: 'blog_id',
+                model: 'post',
+                key: 'post_id',
             },
         },
     },

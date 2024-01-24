@@ -1,12 +1,12 @@
 // Importing the Express framework and required models and utilities
 const router = require('express').Router();
-const { Blog, User, Comment } = require('../../models'); // Importing the Sequelize model for Blog
+const { Post, User, Comment } = require('../../models'); // Importing the Sequelize model for Post
 const withAuth = require('../../utils/auth'); // Importing authentication middleware
 
-// get all Blogs
+// get all Posts
 router.get('/', (req, res) => {
-  // Retrieve all blog posts with associated user and comments
-  Blog.findAll({
+  // Retrieve all Posts with associated user and comments
+  Post.findAll({
     attributes: ['id', 'title', 'post_text', 'created_at'],
     order: [['created_at', 'DESC']], // Order by creation date in descending order
     include: [
@@ -31,10 +31,10 @@ router.get('/', (req, res) => {
     });
 });
 
-// get a specific Blog by ID
+// get a specific Post by ID
 router.get('/:id', (req, res) => {
-  // Retrieve a specific blog post by ID with associated user and comments
-  Blog.findOne({
+  // Retrieve a specific post by ID with associated user and comments
+  Post.findOne({
     where: {
       id: req.params.id
     },
@@ -67,29 +67,29 @@ router.get('/:id', (req, res) => {
     });
 });
 
-// Create a new blog post
+// Create a new post
 router.post('/', withAuth, async (req, res) => {
   try {
-    // Create a new blog post associated with the currently authenticated user
-    const newBlog = await Blog.create({
+    // Create a new post associated with the currently authenticated user
+    const newPost = await Post.create({
       title: req.body.title,
       post_text: req.body.content, // Corrected field name from 'content' to 'post_text'
       user_id: req.session.user_id,
     });
 
-    // Respond with the newly created blog post
-    res.status(200).json(newBlog);
+    // Respond with the newly created post
+    res.status(200).json(newPost);
   } catch (err) {
     // Handle errors by sending a 500 Internal Server Error response
     res.status(500).json({ error: 'Error has occurred' });
   }
 });
 
-// Update a blog post
+// Update a post
 router.put('/:id', withAuth, async (req, res) => {
   try {
-    // Update the specified blog post. The title and content fields can be updated.
-    const updatedBlog = await Blog.update(
+    // Update the specified post. The title and content fields can be updated.
+    const updatedPost = await Post.update(
       {
         title: req.body.title,
         post_text: req.body.content, // Corrected field name from 'content' to 'post_text'
@@ -104,25 +104,25 @@ router.put('/:id', withAuth, async (req, res) => {
     );
 
     // Check if any rows were updated
-    if (updatedBlog[0] === 0) {
+    if (updatedPost[0] === 0) {
       // If no rows were updated, respond with a 404 Not Found status
       res.status(404).json({ error: 'Error has occurred' });
       return;
     }
 
-    // Respond with a success message if the blog post was updated
-    res.status(200).json({ message: 'Blog post updated successfully.' });
+    // Respond with a success message if the post was updated
+    res.status(200).json({ message: 'Post post updated successfully.' });
   } catch (err) {
     // Handle errors by sending a 500 Internal Server Error response
     res.status(500).json({ error: 'Error has occurred' });
   }
 });
 
-// Delete a blog post
+// Delete a post
 router.delete('/:id', withAuth, async (req, res) => {
   try {
-    // Delete a blog post if it belongs to the currently authenticated user
-    const blogData = await Blog.destroy({
+    // Delete a post if it belongs to the currently authenticated user
+    const postData = await Post.destroy({
       where: {
         id: req.params.id,
         user_id: req.session.user_id,
@@ -130,7 +130,7 @@ router.delete('/:id', withAuth, async (req, res) => {
     });
 
     // Check if the deletion was successful
-    if (!blogData) {
+    if (!postData) {
       // If the deletion was not successful, respond with a 404 Not Found status
       res.status(404).json({ error: 'Error has occurred' });
       return;

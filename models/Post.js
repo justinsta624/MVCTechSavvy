@@ -4,31 +4,31 @@ const { Model, DataTypes } = require('sequelize');
 // Importing the Sequelize instance (connection to the database)
 const sequelize = require('../config/connection.js');
 
-// Defining the Blog model by extending the Sequelize Model class
-class Blog extends Model { }
+// Defining the Post model by extending the Sequelize Model class
+class Post extends Model { }
 
-// Initializing the Blog model with the specified attributes and options
-Blog.init(
+// Initializing the Post model with the specified attributes and options
+Post.init(
     {
-        // Defining the 'blog_id' attribute as an auto-incrementing integer primary key
-        blog_id: {
+        // Defining the 'post_id' attribute as an auto-incrementing integer primary key
+        post_id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true,
             allowNull: false,
         },
-        // Defining the 'blog_title' attribute as a long text field that cannot be null
-        blog_title: {
+        // Defining the 'post_title' attribute as a long text field that cannot be null
+        post_title: {
             type: DataTypes.TEXT('long'),
             allowNull: false
         },
-        // Defining the 'blog_content' attribute as a long text field that cannot be null
-        blog_content: {
+        // Defining the 'post_content' attribute as a long text field that cannot be null
+        post_content: {
             type: DataTypes.TEXT('long'),
             allowNull: false
         },
-        // Defining the 'blog_date' attribute as a date field with a default value of the current date and time
-        blog_date: {
+        // Defining the 'post_date' attribute as a date field with a default value of the current date and time
+        post_date: {
             type: DataTypes.DATE,
             allowNull: false,
             defaultValue: DataTypes.NOW,
@@ -54,9 +54,9 @@ Blog.init(
         timestamps: false, // Disabling timestamps (createdAt and updatedAt columns)
         freezeTableName: true, // Preventing Sequelize from pluralizing the table name
         underscored: true, // Using underscores instead of camelCase for column names
-        modelName: 'blog', // Setting the model name to 'blog'
+        modelName: 'post', // Setting the model name to 'post'
     }
 );
 
-// Exporting the Blog model for use in other parts of the application
-module.exports = Blog;
+// Exporting the Post model for use in other parts of the application
+module.exports = Post;

@@ -1,13 +1,13 @@
 // Importing the Express framework and required models and utilities
 const router = require('express').Router();
-const { Blog, User } = require('../models'); // Importing Sequelize models for Blog and User
+const { Post, User } = require('../models'); // Importing Sequelize models for Post and User
 const withAuth = require('../utils/auth'); // Importing authentication middleware
 
 // Dashboard route /dashboard. Access is restricted by middleware to logged-in users only
 router.get('/dashboard', withAuth, async (req, res) => {
     try {
-        // Get all blog posts created by the logged-in user
-        const blogData = await Blog.findAll({
+        // Get all Post posts created by the logged-in user
+        const postData = await Post.findAll({
             where: {
                 user_id: req.session.user_id,
             },
@@ -20,11 +20,11 @@ router.get('/dashboard', withAuth, async (req, res) => {
         });
 
         // Serialize data so the template can read it
-        const blogs = blogData.map((post) => post.get({ plain: true }));
+        const posts = postData.map((post) => post.get({ plain: true }));
 
         // Pass serialized data and session flag into the template
         res.render('dashboard', {
-            blogs,
+            posts,
             logged_in: req.session.logged_in,
         });
     } catch (err) {
@@ -38,11 +38,11 @@ router.get('/new', withAuth, (req, res) => {
     res.render('new-post', { logged_in: req.session.logged_in });
 });
 
-// Handle the creation of a new Blog post
+// Handle the creation of a new Post post
 router.post('/new', withAuth, async (req, res) => {
     try {
-        // Create a new blog post associated with the logged-in user
-        const newBlog = await Blog.create({
+        // Create a new post associated with the logged-in user
+        const newPost = await Post.create({
             title: req.body.title,
             content: req.body.content,
             user_id: req.session.user_id,
@@ -56,11 +56,11 @@ router.post('/new', withAuth, async (req, res) => {
     }
 });
 
-// Handle Blog post deletion
+// Handle post deletion
 router.delete('/:id', withAuth, async (req, res) => {
     try {
-        // Delete a blog post if it belongs to the logged-in user
-        const affectedRows = await Blog.destroy({
+        // Delete a post if it belongs to the logged-in user
+        const affectedRows = await Post.destroy({
             where: {
                 id: req.params.id,
                 user_id: req.session.user_id,
