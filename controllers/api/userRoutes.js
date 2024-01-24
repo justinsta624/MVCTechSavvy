@@ -1,6 +1,6 @@
 // Importing the Express framework and the User model
 const router = require('express').Router();
-const { User, Blog, Comment } = require('../../models');
+const { User, Post, Comment } = require('../../models');
 const withAuth = require('../../utils/auth');
 
 // Get All users
@@ -26,7 +26,7 @@ router.get('/:id', (req, res) => {
         },
         include: [
             {
-                model: Blog,
+                model: Post,
                 attributes: ['id', 'title', 'post_text', 'created_at']
             },
             {

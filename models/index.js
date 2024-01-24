@@ -1,28 +1,28 @@
 // Importing Sequelize models
-const Blog = require('./Blog.js');
+const Post = require('./Post.js');
 const Comment = require('./Comment.js');
 const User = require('./User.js');
 
 // Defining associations between models
 
-// Blog has many Comments
-Blog.hasMany(Comment, {
-    foreignKey: 'blog_id',
+// Post has many Comments
+Post.hasMany(Comment, {
+    foreignKey: 'post_id',
     onDelete: 'CASCADE',
 });
 
-// Comment belongs to a Blog
-Comment.belongsTo(Blog, {
-    foreignKey: 'blog_id',
+// Comment belongs to a Post
+Comment.belongsTo(Post, {
+    foreignKey: 'post_id',
 });
 
-// User has many Blogs
-User.hasMany(Blog, {
+// User has many Posts
+User.hasMany(Post, {
     foreignKey: 'user_id',
 });
 
-// Blog belongs to a User
-Blog.belongsTo(User, {
+// Post belongs to a User
+Post.belongsTo(User, {
     foreignKey: 'user_id',
 });
 
@@ -36,4 +36,4 @@ Comment.belongsTo(User, {
     foreignKey: 'user_id',
 });
 
-module.exports = { Blog, Comment, User };
+module.exports = { Post, Comment, User };

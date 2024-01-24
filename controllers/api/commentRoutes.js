@@ -14,10 +14,10 @@ router.get('/', (req, res) => {
     });
 });
 
-// Create a new comment on a blog post
+// Create a new comment on a post
 router.post('/:post_id', withAuth, async (req, res) => {
   try {
-    // Create a new comment associated with a specific blog post and user
+    // Create a new comment associated with a specific post and user
     const newComment = await Comment.create({
       text: req.body.text,
       post_id: req.params.post_id, // Get the post_id from the request parameters

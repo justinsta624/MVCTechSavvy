@@ -1,13 +1,13 @@
 // Importing the Express framework and required models and utilities
 const router = require('express').Router();
-const { Blog, User, Comment } = require('../models'); // Importing Sequelize models for Blog, User, and Comment
+const { Post, User, Comment } = require('../models'); // Importing Sequelize models for Post, User, and Comment
 const withAuth = require('../utils/auth'); // Importing authentication middleware
 
-// Route to display all blog posts on the homepage
+// Route to display all Post posts on the homepage
 router.get('/', async (req, res) => {
     try {
-        // Get all blog posts and JOIN with user data
-        const blogData = await Blog.findAll({
+        // Get all Post posts and JOIN with user data
+        const postData = await Post.findAll({
             include: [
                 {
                     model: User,
@@ -17,11 +17,11 @@ router.get('/', async (req, res) => {
         });
 
         // Serialize data so the template can read it
-        const blogs = blogData.map((post) => post.get({ plain: true }));
+        const posts = postData.map((post) => post.get({ plain: true }));
 
         // Pass serialized data and session flag into the template
         res.render('homepage', {
-            blogs,
+            posts,
             logged_in: req.session.logged_in // Include information about the user's login status in the template
         });
     } catch (err) {
@@ -30,11 +30,11 @@ router.get('/', async (req, res) => {
     }
 });
 
-// Route to display a single blog post and its comments
+// Route to display a single post and its comments
 router.get('/post/:id', withAuth, async (req, res) => {
     try {
-        // Get a specific blog post by its primary key (id) and JOIN with user and comment data
-        const blogData = await Blog.findByPk(req.params.id, {
+        // Get a specific post by its primary key (id) and JOIN with user and comment data
+        const postData = await Post.findByPk(req.params.id, {
             include: [
                 {
                     model: User,
@@ -54,11 +54,11 @@ router.get('/post/:id', withAuth, async (req, res) => {
         });
 
         // Serialize data so the template can read it
-        const blog = blogData.get({ plain: true });
+        const post = postData.get({ plain: true });
 
         // Pass serialized data and session flag into the template
         res.render('post', {
-            ...blog,
+            ...Post,
             logged_in: req.session.logged_in // Include information about the user's login status in the template
         });
     } catch (err) {
@@ -67,17 +67,17 @@ router.get('/post/:id', withAuth, async (req, res) => {
     }
 });
 
-// Route to add a comment on a specific blog post
+// Route to add a comment on a specific post
 router.post('/post/:id/comment', withAuth, async (req, res) => {
     try {
-        // Create a new comment associated with a blog post and user
+        // Create a new comment associated with a post and user
         const newComment = await Comment.create({
             text: req.body.text,
             post_id: req.params.id,
             user_id: req.session.user_id,
         });
 
-        // Redirect to the blog post page after successfully adding the comment
+        // Redirect to the post page after successfully adding the comment
         res.redirect(`/post/${req.params.id}`);
     } catch (err) {
         // Handle errors by sending a 500 Internal Server Error response

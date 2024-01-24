@@ -1,7 +1,7 @@
 {{#if posts.length}}
 <!-- Display section when there are posts -->
 <section>
-  <h2> Your Posts on the Blog </h2>
+  <h2> Your Posts </h2>
   <!-- Ordered list to contain individual posts -->
   <ol class="post-list">
     {{#each posts as |post|}}
@@ -16,9 +16,9 @@
 {{else}}
 <!-- Display section when there are no posts -->
 <section>
-  <h3> There aren't any Posts on your Blog </h3>
+  <h3> There aren't any Posts </h3>
 </section>
 {{/if}}
 
 <!-- Button to navigate to the page for creating a new post -->
-<button type="submit"><a href="/dashboard/new"> Create New Post on the Blog </a></button>
+<button type="submit"><a href="/dashboard/new"> Create New Post </a></button>
