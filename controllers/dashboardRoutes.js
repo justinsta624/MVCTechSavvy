@@ -4,7 +4,7 @@ const { Post, User } = require('../models'); // Importing Sequelize models for P
 const withAuth = require('../utils/auth'); // Importing authentication middleware
 
 // Dashboard route /dashboard. Access is restricted by middleware to logged-in users only
-router.get('/dashboard', withAuth, async (req, res) => {
+router.get('/', withAuth, async (req, res) => {
     try {
         // Get all Post posts created by the logged-in user
         const postData = await Post.findAll({
