@@ -22,7 +22,7 @@ User.init(
             allowNull: false,
         },
         // Defining the 'name' attribute as a string that cannot be null
-        name: {
+        username: {
             type: DataTypes.STRING,
             allowNull: false,
         },
