@@ -2,6 +2,7 @@
 const router = require('express').Router();
 const { User, Post, Comment } = require('../../models');
 const withAuth = require('../../utils/auth');
+const bcrypt = require('bcrypt');
 
 // Log in route (GET to render login page)
 router.get('/signinUser', (req, res) => {
@@ -16,7 +17,7 @@ router.post('/signinUser', withAuth, async (req, res) => {
 
         if (!userData) {
             // If no user is found with the provided username, respond with a 400 status
-            res.status(400).json({ message: 'Error has occurred' });
+            res.status(400).json({ message: 'Username not found' });
             return;
         }
 
@@ -25,7 +26,7 @@ router.post('/signinUser', withAuth, async (req, res) => {
 
         if (!validPassword) {
             // If the password is incorrect, respond with a 400 status
-            res.status(400).json({ message: 'Error has occurred' });
+            res.status(400).json({ message: 'Invalid password' });
             return;
         }
 
@@ -101,7 +102,7 @@ router.post('/', withAuth, async (req, res) => {
             req.session.logged_in = true; // Set the logged_in flag to true
 
             // Respond with the user data
-            res.status(200).json(userData);
+            res.status(201).json(userData);
         });
     } catch (err) {
         // Handle errors by sending a 400 Bad Request response with the error details
@@ -114,7 +115,7 @@ router.post('/signoutUser', withAuth, (req, res) => {
     if (req.session.logged_in) {
         // If the user is logged in, destroy the session to log them out
         req.session.destroy(() => {
-            res.status(200).end(); // Respond with a 200 status indicating successful logout
+            res.status(201).end(); // Respond with a 201 status indicating successful logout
         });
     } else {
         // If the user is not logged in, respond with a 404 status

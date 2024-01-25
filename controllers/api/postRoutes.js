@@ -78,7 +78,7 @@ router.post('/', withAuth, async (req, res) => {
     });
 
     // Respond with the newly created post
-    res.status(200).json(newPost);
+    res.status(201).json(newPost);
   } catch (err) {
     // Handle errors by sending a 500 Internal Server Error response
     res.status(500).json({ error: 'Error has occurred' });
@@ -111,7 +111,7 @@ router.put('/:id', withAuth, async (req, res) => {
     }
 
     // Respond with a success message if the post was updated
-    res.status(200).json({ message: 'Post post updated successfully.' });
+    res.status(201).json({ message: 'Post updated successfully.' });
   } catch (err) {
     // Handle errors by sending a 500 Internal Server Error response
     res.status(500).json({ error: 'Error has occurred' });

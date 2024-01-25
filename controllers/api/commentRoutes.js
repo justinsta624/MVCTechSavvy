@@ -25,7 +25,7 @@ router.post('/:post_id', withAuth, async (req, res) => {
     });
 
     // Respond with the newly created comment
-    res.status(200).json(newComment);
+    res.status(201).json(newComment);
   } catch (err) {
     // Handle errors by sending a 500 Internal Server Error response
     res.status(500).json({ error: 'Error has occurred' });
