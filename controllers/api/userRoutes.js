@@ -3,6 +3,47 @@ const router = require('express').Router();
 const { User, Post, Comment } = require('../../models');
 const withAuth = require('../../utils/auth');
 
+// Log in route (GET to render login page)
+router.get('/login', (req, res) => {
+    res.render('login'); 
+});
+
+// Log in route (POST to handle login logic)
+router.post('/login', async (req, res) => {
+    try {
+        // Check if the username entered matches one in the database
+        const userData = await User.findOne({ where: { username: req.body.username } });
+
+        if (!userData) {
+            // If no user is found with the provided username, respond with a 400 status
+            res.status(400).json({ message: 'Error has occurred' });
+            return;
+        }
+
+        // Check if the password entered matches the stored hashed password in the database
+        const validPassword = await userData.checkPassword(req.body.password);
+
+        if (!validPassword) {
+            // If the password is incorrect, respond with a 400 status
+            res.status(400).json({ message: 'Error has occurred' });
+            return;
+        }
+
+        // Set up session after a successful login
+        req.session.save(() => {
+            req.session.user_id = userData.id; // Save the user's ID in the session
+            req.session.logged_in = true; // Set the logged_in flag to true
+
+            // Respond with user data and a success message
+            res.json({ user: userData, message: 'Successfully logged in!' });
+        });
+
+    } catch (err) {
+        // Handle errors by sending a 400 Bad Request response with the error details
+        res.status(400).json(err);
+    }
+});
+
 // Get All users
 router.get('/', (req, res) => {
     // Retrieve all users from the database excluding the password attribute
@@ -62,42 +103,6 @@ router.post('/', async (req, res) => {
             // Respond with the user data
             res.status(200).json(userData);
         });
-    } catch (err) {
-        // Handle errors by sending a 400 Bad Request response with the error details
-        res.status(400).json(err);
-    }
-});
-
-// Log in route 
-router.post('/login', async (req, res) => {
-    try {
-        // Check if the username entered matches one in the database
-        const userData = await User.findOne({ where: { username: req.body.username } });
-
-        if (!userData) {
-            // If no user is found with the provided username, respond with a 400 status
-            res.status(400).json({ message: 'Error has occurred' });
-            return;
-        }
-
-        // Check if the password entered matches the stored hashed password in the database
-        const validPassword = await userData.checkPassword(req.body.password);
-
-        if (!validPassword) {
-            // If the password is incorrect, respond with a 400 status
-            res.status(400).json({ message: 'Error has occurred' });
-            return;
-        }
-
-        // Set up session after a successful login
-        req.session.save(() => {
-            req.session.user_id = userData.id; // Save the user's ID in the session
-            req.session.logged_in = true; // Set the logged_in flag to true
-
-            // Respond with user data and a success message
-            res.json({ user: userData, message: 'Successfully logged in!' });
-        });
-
     } catch (err) {
         // Handle errors by sending a 400 Bad Request response with the error details
         res.status(400).json(err);
