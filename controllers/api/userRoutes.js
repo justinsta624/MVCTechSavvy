@@ -4,12 +4,12 @@ const { User, Post, Comment } = require('../../models');
 const withAuth = require('../../utils/auth');
 
 // Log in route (GET to render login page)
-router.get('/login', (req, res) => {
-    res.render('login'); 
+router.get('/signinUser', (req, res) => {
+    res.render('signinUser'); 
 });
 
 // Log in route (POST to handle login logic)
-router.post('/login', async (req, res) => {
+router.post('/signinUser', withAuth, async (req, res) => {
     try {
         // Check if the username entered matches one in the database
         const userData = await User.findOne({ where: { username: req.body.username } });
@@ -90,7 +90,7 @@ router.get('/:id', (req, res) => {
 });
 
 // Sign up a new user (create a new entry in the user table of the db)
-router.post('/', async (req, res) => {
+router.post('/', withAuth, async (req, res) => {
     try {
         // Create a new user by inserting data from req.body into the User model
         const userData = await User.create(req.body);
@@ -110,7 +110,7 @@ router.post('/', async (req, res) => {
 });
 
 // Log out route
-router.post('/logout', (req, res) => {
+router.post('/signoutUser', withAuth, (req, res) => {
     if (req.session.logged_in) {
         // If the user is logged in, destroy the session to log them out
         req.session.destroy(() => {
