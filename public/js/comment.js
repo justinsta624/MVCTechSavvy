@@ -4,7 +4,7 @@ async function commentFormHandler(event) {
     event.preventDefault();
 
     // Retrieve the comment text from the textarea input
-    const comment_content = document.querySelector('textarea[name="comment-body"]').value.trim();
+    const comment_content = document.querySelector('textarea[name="comment_content"]').value.trim();
 
     // Extract the post_id from the current URL
     const post_id = window.location.toString().split('/')[

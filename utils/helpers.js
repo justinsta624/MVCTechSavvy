@@ -13,14 +13,4 @@ module.exports = {
     }
     return word;
   },
-
-  // Format Currency Function: Adds a dollar sign to the provided cost
-  format_currency: (cost) => {
-    return `$ ${cost}`;
-  },
-
-  // Format Amount Function: Adds commas to large numbers for better readability
-  format_amount: (amount) => {
-    return parseInt(amount).toLocaleString();
-  },
 };

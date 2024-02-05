@@ -23,7 +23,7 @@ Comment.init(
             allowNull: false
         },
         // Defining the 'comment_date' attribute as a date field with a default value of the current date and time
-        comment_date: {
+        format_date: {
             type: DataTypes.DATE,
             allowNull: false,
             defaultValue: DataTypes.NOW,
