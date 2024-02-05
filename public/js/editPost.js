@@ -4,18 +4,18 @@ async function editFormHandler(event) {
     event.preventDefault();
 
     // Extract the values of the title, post_text, and post ID from the form inputs and the current URL
-    const title = document.querySelector('input[name="post-title"]').value;
-    const post_text = document.querySelector('textarea[name="post-text"]').value;
-    const id = window.location.toString().split('/')[
+    const post_title = document.querySelector('input[name="post-title"]').value;
+    const post_content = document.querySelector('textarea[name="post-text"]').value;
+    const post_id = window.location.toString().split('/')[
         window.location.toString().split('/').length - 1
     ];
 
     // Use the fetch API to make a PUT request to the /api/posts/:id endpoint
-    const response = await fetch(`/api/posts/${id}`, {
+    const response = await fetch(`/api/posts/${post_id}`, {
         method: 'PUT', // Specify the HTTP method as PUT
         body: JSON.stringify({
-            title,
-            post_text
+            post_title,
+            post_content
         }),
         headers: {
             'Content-Type': 'application/json' // Set the request content type to JSON
