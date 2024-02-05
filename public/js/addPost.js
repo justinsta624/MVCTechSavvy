@@ -4,15 +4,15 @@ async function newFormHandler(event) {
     event.preventDefault();
 
     // Retrieve values from the form inputs
-    const title = document.querySelector('input[name="post-title"]').value;
-    const post_text = document.querySelector('textarea[name="post-text"]').value;
+    const post_title = document.querySelector('input[name="post-title"]').value;
+    const post_content = document.querySelector('textarea[name="post-text"]').value;
 
     // Use the fetch API to make a POST request to the /api/posts endpoint
     const response = await fetch(`/api/posts`, {
         method: 'POST', // Specify the HTTP method
         body: JSON.stringify({ // Convert the data to JSON format and set it as the request body
-            title,
-            post_text
+            post_title,
+            post_content
         }),
         headers: {
             'Content-Type': 'application/json' // Specify the content type as JSON

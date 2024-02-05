@@ -7,9 +7,9 @@ const homeRoutes = require('./homeRoutes'); // Importing routes related to the h
 const dashboardRoutes = require('./dashboardRoutes'); // Importing routes related to the dashboard
 
 // Configuring routes by associating route modules with specific URL paths
-router.use('/', homeRoutes); // Routes for the root path ('/')
-router.use('/dashboard', dashboardRoutes); // Routes for the '/dashboard' path
 router.use('/api', apiRoutes); // Routes for the '/api' path
+router.use('/dashboard', dashboardRoutes); // Routes for the '/dashboard' path
+router.use('/', homeRoutes); // Routes for the root path ('/')
 
 // Exporting the configured router to be used in other parts of the application
 module.exports = router;

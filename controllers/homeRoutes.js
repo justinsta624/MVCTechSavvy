@@ -3,6 +3,11 @@ const router = require('express').Router();
 const { Post, User, Comment } = require('../models'); // Importing Sequelize models for Post, User, and Comment
 const withAuth = require('../utils/auth'); // Importing authentication middleware
 
+// Log in route (GET to render login page)
+router.get('/signinUser', (req, res) => {
+    res.render('signinUser'); 
+});
+
 // Route to display all Post posts on the homepage
 router.get('/', async (req, res) => {
     try {
