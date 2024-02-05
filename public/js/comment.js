@@ -4,7 +4,7 @@ async function commentFormHandler(event) {
     event.preventDefault();
 
     // Retrieve the comment text from the textarea input
-    const comment_text = document.querySelector('textarea[name="comment-body"]').value.trim();
+    const comment_content = document.querySelector('textarea[name="comment-body"]').value.trim();
 
     // Extract the post_id from the current URL
     const post_id = window.location.toString().split('/')[
@@ -12,13 +12,13 @@ async function commentFormHandler(event) {
     ];
 
     // Check if the comment text is not empty
-    if (comment_text) {
+    if (comment_content) {
         // Use the fetch API to make a POST request to the /api/comments endpoint
         const response = await fetch('/api/comments', {
             method: 'POST', // Specify the HTTP method
             body: JSON.stringify({ // Convert the data to JSON format and set it as the request body
                 post_id,
-                comment_text
+                comment_content
             }),
             headers: {
                 'Content-Type': 'application/json' // Specify the content type as JSON
