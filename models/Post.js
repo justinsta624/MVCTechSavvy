@@ -28,7 +28,7 @@ Post.init(
             allowNull: false
         },
         // Defining the 'post_date' attribute as a date field with a default value of the current date and time
-        post_date: {
+        format_date: {
             type: DataTypes.DATE,
             allowNull: false,
             defaultValue: DataTypes.NOW,
