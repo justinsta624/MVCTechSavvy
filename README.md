@@ -24,6 +24,14 @@ Followings are the outcomes of the challenge 14:
 * The URL of the GitHub repository, with a unique name and a README describing the project </br>
 [Repository for this challenge](https://github.com/justinsta624/MVCTechSavvy)
 
+## Screentshot <a ID="screentshot"></a>
+![Screenshot 2024-02-04 205647](https://github.com/justinsta624/MVCTechSavvy/assets/143357899/574d61be-2189-41c1-8516-06d6683f88ca)
+![Screenshot 2024-02-04 205752](https://github.com/justinsta624/MVCTechSavvy/assets/143357899/855b237a-1afb-48f9-bbec-ffa204d39c6f)
+![Screenshot 2024-02-04 205946](https://github.com/justinsta624/MVCTechSavvy/assets/143357899/7ea14ff5-5d33-4275-b609-f03013b5158b)
+![Screenshot 2024-02-04 210009](https://github.com/justinsta624/MVCTechSavvy/assets/143357899/1549817c-bf9f-4aef-a46c-922f2c3c5585)
+![Screenshot 2024-02-04 210019](https://github.com/justinsta624/MVCTechSavvy/assets/143357899/955a2750-cfde-4590-aee8-c82d51e255d8)
+
+
 ## Table of contents
 
 - [Importance](#importance)
