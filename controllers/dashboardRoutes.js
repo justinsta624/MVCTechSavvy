@@ -6,6 +6,7 @@ const withAuth = require('../utils/auth'); // Importing authentication middlewar
 // Dashboard route /dashboard. Access is restricted by middleware to logged-in users only
 router.get('/', withAuth, async (req, res) => {
     try {
+        console.log(req.session)
         // Get all Post posts created by the logged-in user
         const postData = await Post.findAll({
             where: {
@@ -21,13 +22,14 @@ router.get('/', withAuth, async (req, res) => {
 
         // Serialize data so the template can read it
         const posts = postData.map((post) => post.get({ plain: true }));
-
+        console.log(posts)    
         // Pass serialized data and session flag into the template
         res.render('dashboard', {
             posts,
             logged_in: req.session.logged_in,
         });
     } catch (err) {
+        console.log(err)
         // Handle errors by sending a 500 Internal Server Error response
         res.status(500).json({ error: 'Error has occurred' });
     }
@@ -35,7 +37,7 @@ router.get('/', withAuth, async (req, res) => {
 
 // Render the form to create a new post
 router.get('/new', withAuth, (req, res) => {
-    res.render('new-post', { logged_in: req.session.logged_in });
+    res.render('addPost', { logged_in: req.session.logged_in });
 });
 
 // Handle the creation of a new Post post
@@ -47,12 +49,13 @@ router.post('/new', withAuth, async (req, res) => {
             content: req.body.content,
             user_id: req.session.user_id,
         });
-
+        res.json(newPost)
         // Redirect to the dashboard after successfully creating the post
-        res.redirect('/dashboard');
+        // res.redirect('/dashboard');
     } catch (err) {
+        console.log(err)
         // Handle errors by sending a 500 Internal Server Error response
-        res.status(500).json({ error: 'Error has occurred' });
+        res.status(500).json({ error: err });
     }
 });
 

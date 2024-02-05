@@ -72,14 +72,15 @@ router.post('/', withAuth, async (req, res) => {
   try {
     // Create a new post associated with the currently authenticated user
     const newPost = await Post.create({
-      title: req.body.title,
-      post_text: req.body.content, // Corrected field name from 'content' to 'post_text'
+      post_title: req.body.post_title,
+      post_content: req.body.post_content, // Corrected field name from 'content' to 'post_text'
       user_id: req.session.user_id,
     });
 
     // Respond with the newly created post
     res.status(201).json(newPost);
   } catch (err) {
+    console.log(err)
     // Handle errors by sending a 500 Internal Server Error response
     res.status(500).json({ error: 'Error has occurred' });
   }

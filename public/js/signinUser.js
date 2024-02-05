@@ -6,15 +6,17 @@ async function signupFormHandler(event) {
     // Extract the values of the username and password from the signup form inputs
     const username = document.querySelector('#username-signup').value.trim();
     const password = document.querySelector('#password-signup').value.trim();
+    const email = document.querySelector('#email-signup').value.trim();
 
     // Check if both username and password are provided
-    if (username && password) {
+    if (username && password && email) {
         // Use the fetch API to make a POST request to the /api/users endpoint to create a new user
         const response = await fetch('/api/users', {
             method: 'post', // Specify the HTTP method as POST
             body: JSON.stringify({
                 username,
-                password
+                password,
+                email
             }),
             headers: { 'Content-Type': 'application/json' } // Set the request content type to JSON
         });
@@ -36,15 +38,15 @@ async function signupFormHandler(event) {
 async function loginFormHandler(event) {
     // Prevent the default behavior of the form submission (prevents the page from refreshing)
     event.preventDefault();
-
+    console.log('signinUser')
     // Extract the values of the username and password from the login form inputs
     const username = document.querySelector('#username-login').value.trim();
     const password = document.querySelector('#password-login').value.trim();
-
+    console.log(username, password)
     // Check if both username and password are provided
     if (username && password) {
         // Use the fetch API to make a POST request to the /api/users/signinUser endpoint to authenticate the user
-        const response = await fetch('/api/users/signinUser', {
+        const response = await fetch('/api/users/login', {
             method: 'post', // Specify the HTTP method as POST
             body: JSON.stringify({
                 username,
@@ -52,7 +54,8 @@ async function loginFormHandler(event) {
             }),
             headers: { 'Content-Type': 'application/json' } // Set the request content type to JSON
         });
-
+        const result = await response.json()
+        console.log(result)
         // Check if the response status is okay (HTTP status code 200-299)
         if (response.ok) {
             // If successful, redirect to the dashboard page

@@ -4,14 +4,10 @@ const { User, Post, Comment } = require('../../models');
 const withAuth = require('../../utils/auth');
 const bcrypt = require('bcrypt');
 
-// Log in route (GET to render login page)
-router.get('/signinUser', (req, res) => {
-    res.render('signinUser'); 
-});
-
 // Log in route (POST to handle login logic)
-router.post('/signinUser', withAuth, async (req, res) => {
+router.post('/login', async (req, res) => {
     try {
+        console.log('login')
         // Check if the username entered matches one in the database
         const userData = await User.findOne({ where: { username: req.body.username } });
 
@@ -29,10 +25,10 @@ router.post('/signinUser', withAuth, async (req, res) => {
             res.status(400).json({ message: 'Invalid password' });
             return;
         }
-
+        console.log(userData)   
         // Set up session after a successful login
         req.session.save(() => {
-            req.session.user_id = userData.id; // Save the user's ID in the session
+            req.session.user_id = userData.user_id; // Save the user's ID in the session
             req.session.logged_in = true; // Set the logged_in flag to true
 
             // Respond with user data and a success message
@@ -40,6 +36,7 @@ router.post('/signinUser', withAuth, async (req, res) => {
         });
 
     } catch (err) {
+        console.log(err)
         // Handle errors by sending a 400 Bad Request response with the error details
         res.status(400).json(err);
     }
@@ -91,14 +88,14 @@ router.get('/:id', (req, res) => {
 });
 
 // Sign up a new user (create a new entry in the user table of the db)
-router.post('/', withAuth, async (req, res) => {
+router.post('/', async (req, res) => {
     try {
         // Create a new user by inserting data from req.body into the User model
         const userData = await User.create(req.body);
 
         // Set up session after a successful signup
         req.session.save(() => {
-            req.session.user_id = userData.id; // Save the user's ID in the session
+            req.session.user_id = userData.user_id; // Save the user's ID in the session
             req.session.logged_in = true; // Set the logged_in flag to true
 
             // Respond with the user data
@@ -111,7 +108,7 @@ router.post('/', withAuth, async (req, res) => {
 });
 
 // Log out route
-router.post('/signoutUser', withAuth, (req, res) => {
+router.post('/signoutUser', (req, res) => {
     if (req.session.logged_in) {
         // If the user is logged in, destroy the session to log them out
         req.session.destroy(() => {
