@@ -5,7 +5,7 @@ async function newFormHandler(event) {
 
     // Retrieve values from the form inputs
     const post_title = document.querySelector('input[name="post-title"]').value;
-    const post_content = document.querySelector('textarea[name="post_content"]').value;
+    const post_content = document.querySelector('textarea[name="post-content"]').value
 
     // Use the fetch API to make a POST request to the /api/posts endpoint
     const response = await fetch(`/api/posts`, {
