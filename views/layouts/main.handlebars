@@ -30,7 +30,7 @@
           {{#if loggedIn}}
           <a href="/" id="logout"> Sign out </a>
           {{else}}
-          <a href="/signinUser"> Sign in </a>
+          <a href="/login"> Sign in </a>
           {{/if}}
         </nav>
       </div>
@@ -54,7 +54,7 @@
 
   <!-- Script inclusion based on user login status -->
   {{#if loggedIn}}
-  <script src="/js/signoutUser.js"></script>
+  <script src="/js/logout.js"></script>
   {{/if}}
 </body>
 

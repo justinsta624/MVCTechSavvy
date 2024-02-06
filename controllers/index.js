@@ -11,5 +11,9 @@ router.use('/api', apiRoutes); // Routes for the '/api' path
 router.use('/dashboard', dashboardRoutes); // Routes for the '/dashboard' path
 router.use('/', homeRoutes); // Routes for the root path ('/')
 
+router.use((req, res) => {
+    res.status(404).end();
+});
+
 // Exporting the configured router to be used in other parts of the application
 module.exports = router;
