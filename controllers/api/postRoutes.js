@@ -7,7 +7,7 @@ const withAuth = require('../../utils/auth'); // Importing authentication middle
 router.get('/', (req, res) => {
   // Retrieve all Posts with associated user and comments
   Post.findAll({
-    attributes: ['post_id', 'post_title', 'post_content', 'format_date', 'created_at'],
+    attributes: ['post_id', 'post_title', 'post_content', 'created_at'],
     order: [['created_at', 'DESC']], // Order by creation date in descending order
     include: [
       {
@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
       },
       {
         model: Comment, // Include the Comment model to get associated comments
-        attributes: ['comment_id', 'comment_content', 'format_date', 'post_id', 'user_id', 'created_at'],
+        attributes: ['comment_id', 'comment_content', 'post_id', 'user_id', 'created_at'],
         include: {
           model: User, // Include the User model for each comment to get the username
           attributes: ['username']
@@ -38,7 +38,7 @@ router.get('/:id', (req, res) => {
     where: {
       id: req.params.id
     },
-    attributes: ['post_id', 'post_title', 'post_content', 'format_date', 'created_at'],
+    attributes: ['post_id', 'post_title', 'post_content', 'created_at'],
     include: [
       {
         model: User, // Include the User model to get information about the author
@@ -46,7 +46,7 @@ router.get('/:id', (req, res) => {
       },
       {
         model: Comment, // Include the Comment model to get associated comments
-        attributes: ['comment_id', 'comment_content', 'format_date', 'post_id', 'user_id', 'created_at'],
+        attributes: ['comment_id', 'comment_content', 'post_id', 'user_id', 'created_at'],
         include: {
           model: User, // Include the User model for each comment to get the username
           attributes: ['username']
