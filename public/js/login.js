@@ -38,7 +38,7 @@ async function signupFormHandler(event) {
 async function loginFormHandler(event) {
     // Prevent the default behavior of the form submission (prevents the page from refreshing)
     event.preventDefault();
-    console.log('signinUser')
+    console.log('login')
     // Extract the values of the username and password from the login form inputs
     const username = document.querySelector('#username-login').value.trim();
     const password = document.querySelector('#password-login').value.trim();

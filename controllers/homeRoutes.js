@@ -1,94 +1,105 @@
 // Importing the Express framework and required models and utilities
 const router = require('express').Router();
+const sequelize = require('../config/connection');
 const { Post, User, Comment } = require('../models'); // Importing Sequelize models for Post, User, and Comment
 const withAuth = require('../utils/auth'); // Importing authentication middleware
 
 // Log in route (GET to render login page)
-router.get('/signinUser', (req, res) => {
-    res.render('signinUser'); 
-});
-
-// Route to display all Post posts on the homepage
-router.get('/', async (req, res) => {
-    try {
-        // Get all Post posts and JOIN with user data
-        const postData = await Post.findAll({
-            include: [
-                {
-                    model: User,
-                    attributes: ['username'],
-                },
-            ],
-        });
-
-        // Serialize data so the template can read it
-        const posts = postData.map((post) => post.get({ plain: true }));
-
-        // Pass serialized data and session flag into the template
-        res.render('homepage', {
-            posts,
-            logged_in: req.session.logged_in // Include information about the user's login status in the template
-        });
-    } catch (err) {
-        // Handle errors by sending a 500 Internal Server Error response
-        res.status(500).json({ error: 'Error has occurred' });
+router.get('/login', (req, res) => {
+    if (req.session.loggedIn) {
+      res.redirect('/');
+      return;
     }
-});
+    res.render('login');
+  });
 
-// Route to display a single post and its comments
-router.get('/post/:id', withAuth, async (req, res) => {
-    try {
-        // Get a specific post by its primary key (id) and JOIN with user and comment data
-        const postData = await Post.findByPk(req.params.id, {
-            include: [
-                {
-                    model: User,
-                    attributes: ['username'],
-                },
-                {
-                    model: Comment,
-                    attributes: ['text'],
-                    include: [
-                        {
-                            model: User,
-                            attributes: ['username'],
-                        },
-                    ],
-                },
-            ],
+router.get('/', (req, res) => {
+    Post.findAll({
+      attributes: [
+        'post_id',
+        'post_title',
+        "post_content",
+        'created_at'      
+      ],
+      include: [
+        {
+          model: Comment,
+          attributes: ['comment_id', 'comment_content', 'post_id', 'user_id', 'created_at'],
+          include: {
+            model: User,
+            attributes: ['username']
+          }
+        },
+        {
+          model: User,
+          attributes: ['username']
+        }
+      ]
+    })
+      .then(dbPostData => {
+        const posts = dbPostData.map(post => post.get({ plain: true }));
+        // pass a single post object into the homepage template
+        res.render('homepage', { 
+          posts,
+          loggedIn: req.session.loggedIn 
         });
-
-        // Serialize data so the template can read it
-        const post = postData.get({ plain: true });
-
-        // Pass serialized data and session flag into the template
-        res.render('post', {
-            ...Post,
-            logged_in: req.session.logged_in // Include information about the user's login status in the template
-        });
-    } catch (err) {
-        // Handle errors by sending a 500 Internal Server Error response
-        res.status(500).json({ error: 'Error has occurred' });
-    }
-});
-
-// Route to add a comment on a specific post
-router.post('/post/:id/comment', withAuth, async (req, res) => {
-    try {
-        // Create a new comment associated with a post and user
-        const newComment = await Comment.create({
-            text: req.body.text,
-            post_id: req.params.id,
-            user_id: req.session.user_id,
-        });
-
-        // Redirect to the post page after successfully adding the comment
-        res.redirect(`/post/${req.params.id}`);
-    } catch (err) {
-        // Handle errors by sending a 500 Internal Server Error response
-        res.status(500).json({ error: 'Error has occurred' });
-    }
-});
-
-// Exporting the router for use in other parts of the application
-module.exports = router;
+      })
+      .catch(err => {
+        console.log(err);
+        res.status(500).json(err);
+      });
+  });
+  
+  router.get('/post/:id', (req, res) => {
+    Post.findOne({
+      where: {
+        id: req.params.id
+      },
+      attributes: [
+        'post_id',
+        'post_title',
+        'post_content',
+        'created_at'
+      ],
+      include: [
+        {
+          model: Comment,
+          attributes: [
+            'comment_id',
+            'comment_content',
+            'post_id',
+            'user_id',
+            'created_at'
+          ],
+          include: {
+            model: User,
+            attributes: ['username']
+          }
+        },
+        {
+          model: User,
+          attributes: ['username']
+        }
+      ]
+    })
+    .then(dbPostData => {
+      if (!dbPostData) {
+        res.status(404).json({ message: 'No Post found with this id' });
+        return;
+      }
+      //serialize the data
+      const post = dbPostData.get({ plain: true });
+  
+      //pass data to the template
+      res.render('single-post', {
+        post, 
+        loggedIn: req.session.loggedIn
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+  });
+  
+  module.exports = router;
