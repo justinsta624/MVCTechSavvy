@@ -45,7 +45,7 @@ async function loginFormHandler(event) {
     console.log(username, password)
     // Check if both username and password are provided
     if (username && password) {
-        // Use the fetch API to make a POST request to the /api/users/signinUser endpoint to authenticate the user
+        // Use the fetch API to make a POST request to the /api/users/login endpoint to authenticate the user
         const response = await fetch('/api/users/login', {
             method: 'post', // Specify the HTTP method as POST
             body: JSON.stringify({

@@ -1,6 +1,6 @@
 // Define an asynchronous function named logout
 async function logout() {
-    // Use the fetch API to make a POST request to the /api/users/signoutUser endpoint to log out the user
+    // Use the fetch API to make a POST request to the /api/users/logout endpoint to log out the user
     const response = await fetch('/api/users/logout', {
         method: 'post', // Specify the HTTP method as POST
         headers: { 'Content-Type': 'application/json' } // Set the request content type to JSON
