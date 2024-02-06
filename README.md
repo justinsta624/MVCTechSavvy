@@ -25,7 +25,7 @@ Followings are the outcomes of the challenge 14:
 [Repository for this challenge](https://github.com/justinsta624/MVCTechSavvy)
 
 ## Screentshot <a ID="screentshot"></a>
-![Screenshot 2024-02-04 205647](https://github.com/justinsta624/MVCTechSavvy/assets/143357899/8f26e2f6-b841-4628-b749-423e96761d56)
+![Screenshot 2024-02-05 195258](https://github.com/justinsta624/MVCTechSavvy/assets/143357899/aa615eb5-f5c9-43ff-b405-72fb58e01e88)
 ![Screenshot 2024-02-04 205752](https://github.com/justinsta624/MVCTechSavvy/assets/143357899/855b237a-1afb-48f9-bbec-ffa204d39c6f)
 ![Screenshot 2024-02-04 205946](https://github.com/justinsta624/MVCTechSavvy/assets/143357899/7ea14ff5-5d33-4275-b609-f03013b5158b)
 ![Screenshot 2024-02-04 210009](https://github.com/justinsta624/MVCTechSavvy/assets/143357899/1549817c-bf9f-4aef-a46c-922f2c3c5585)
