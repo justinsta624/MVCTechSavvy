@@ -24,6 +24,11 @@ Comment.init(
                 len: [1]
             }
         },
+        created_at: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
         // Defining the 'user_id' attribute as an integer and setting up a foreign key relationship with the 'user' model
         user_id: {
             type: DataTypes.INTEGER,

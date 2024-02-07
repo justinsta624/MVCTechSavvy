@@ -42,7 +42,7 @@ router.get('/edit/:id', (req, res) => {
     // Retrieve a specific post by ID with associated user and comments
     Post.findOne({
       where: {
-        id: req.params.id
+        post_id: req.params.id
       },
       attributes: ['post_id', 'post_title', 'post_content', 'created_at'],
       include: [
@@ -68,7 +68,7 @@ router.get('/edit/:id', (req, res) => {
         //serialize the data
         const post = dbPostData.get({ plain: true });
         // pass to the template
-        res.render('edit-post', {
+        res.render('changePost', {
           post,
           loggedIn: req.session.loggedIn
         });

@@ -36,7 +36,7 @@ router.get('/:id', (req, res) => {
   // Retrieve a specific post by ID with associated user and comments
   Post.findOne({
     where: {
-      id: req.params.id
+      post_id: req.params.id
     },
     attributes: ['post_id', 'post_title', 'post_content', 'created_at'],
     include: [
@@ -87,18 +87,19 @@ router.post('/', withAuth, async (req, res) => {
 });
 
 // Update a post
-router.put('/:id', withAuth, async (req, res) => {
+router.put('/:id', async (req, res) => {
   try {
     // Update the specified post. The title and content fields can be updated.
     const updatedPost = await Post.update(
       {
-        title: req.body.title,
-        post_text: req.body.content, // Corrected field name from 'content' to 'post_text'
+        post_title: req.body.post_title,
+        post_content: req.body.post_content, // Corrected field name from 'content' to 'post_text'
+        user_id: req.session.user_id
       },
       {
         // Using req.params.id to identify a specific post, user_id: req.session.user_id to ensure that only the posts owned by the currently authenticated user are eligible for updating
         where: {
-          id: req.params.id,
+          post_id: req.params.id,
           user_id: req.session.user_id,
         },
       }
@@ -125,7 +126,7 @@ router.delete('/:id', withAuth, async (req, res) => {
     // Delete a post if it belongs to the currently authenticated user
     const postData = await Post.destroy({
       where: {
-        id: req.params.id,
+        post_id: req.params.id,
         user_id: req.session.user_id,
       },
     });

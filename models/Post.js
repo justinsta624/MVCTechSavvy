@@ -1,5 +1,5 @@
 // Importing necessary modules from Sequelize
-const { Model, DataTypes } = require('sequelize');
+const { Model, DataTypes, DATE } = require('sequelize');
 
 // Importing the Sequelize instance (connection to the database)
 const sequelize = require('../config/connection.js');
@@ -26,6 +26,11 @@ Post.init(
         post_content: {
             type: DataTypes.STRING,
             allowNull: false
+        },
+        created_at: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
         },
         // Defining the 'user_id' attribute as an integer and setting up a foreign key relationship with the 'user' model
         user_id: {
