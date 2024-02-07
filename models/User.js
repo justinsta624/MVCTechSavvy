@@ -35,6 +35,11 @@ User.init(
                 isEmail: true,
             },
         },
+        created_at: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
         // Defining the 'active_ind' attribute as an integer with a default value of 1
         active_ind: {
             type: DataTypes.INTEGER,

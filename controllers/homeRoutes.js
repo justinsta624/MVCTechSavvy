@@ -53,7 +53,7 @@ router.get('/', (req, res) => {
   router.get('/post/:id', (req, res) => {
     Post.findOne({
       where: {
-        id: req.params.id
+        post_id: req.params.id
       },
       attributes: [
         'post_id',
@@ -91,7 +91,7 @@ router.get('/', (req, res) => {
       const post = dbPostData.get({ plain: true });
   
       //pass data to the template
-      res.render('single-post', {
+      res.render('singlePost', {
         post, 
         loggedIn: req.session.loggedIn
       });
