@@ -19,6 +19,7 @@ async function newFormHandler(event) {
         }
     });
     // tester
+
     // Check if the response status is okay (HTTP status code 200-299)
     if (response.ok) {
         // If successful, redirect the user to the dashboard page

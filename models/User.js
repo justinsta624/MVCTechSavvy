@@ -17,54 +17,56 @@ User.init(
         // Defining the 'user_id' attribute as an auto-incrementing integer primary key
         user_id: {
             type: DataTypes.INTEGER,
-            primaryKey: true,
-            autoIncrement: true,
-            allowNull: false,
+            primaryKey: true, // 'user_id' is the primary key
+            autoIncrement: true, // 'user_id' auto-increments with each new entry
+            allowNull: false, // 'user_id' cannot be null
         },
         // Defining the 'name' attribute as a string that cannot be null
         username: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: false, // 'username' cannot be null
         },
         // Defining the 'email' attribute as a string that must be a valid email address and is unique
         email: {
             type: DataTypes.STRING,
-            allowNull: false,
-            unique: true,
+            allowNull: false, // 'email' cannot be null
+            unique: true, // 'email' must be unique
             validate: {
-                isEmail: true,
+                isEmail: true, // 'email' must be a valid email address
             },
         },
         created_at: {
             type: DataTypes.DATE,
             allowNull: false,
-            defaultValue: DataTypes.NOW,
+            defaultValue: DataTypes.NOW, // Default value for 'created_at' is the current timestamp
         },
         // Defining the 'active_ind' attribute as an integer with a default value of 1
         active_ind: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            defaultValue: 1,
+            defaultValue: 1, // Default value for 'active_ind' is 1
         },
         // Defining the 'password' attribute as a string that cannot be null and must have a minimum length of 8 characters
         password: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: false, // 'password' cannot be null
             validate: {
-                len: [4],
+                len: [4], // 'password' must have a minimum length of 4 characters
             },
         },
     },
     {
         // Sequelize hooks for password hashing before creation and update
         hooks: {
+            // Hashing the password before creating a new user
             async beforeCreate(newUserData) {
-                newUserData.password = await bcrypt.hash(newUserData.password, 10);
+                newUserData.password = await bcrypt.hash(newUserData.password, 10); // Hashing the password with bcrypt
                 return newUserData;
             },
+            // Hashing the password before updating an existing user (if the password is changed)
             async beforeUpdate(updatedUserData, options) {
                 if (updatedUserData.changed('password')) {
-                    const hashedPassword = await bcrypt.hash(updatedUserData.password, 10);
+                    const hashedPassword = await bcrypt.hash(updatedUserData.password, 10); // Hashing the updated password with bcrypt
                     updatedUserData.password = hashedPassword;
                 }
                 return updatedUserData;
