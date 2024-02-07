@@ -8,7 +8,7 @@ async function signupFormHandler(event) {
     const password = document.querySelector('#password-signup').value.trim();
     const email = document.querySelector('#email-signup').value.trim();
 
-    // Check if both username and password are provided
+    // Check if both username, password, and email are provided
     if (username && password && email) {
         // Use the fetch API to make a POST request to the /api/users endpoint to create a new user
         const response = await fetch('/api/users', {

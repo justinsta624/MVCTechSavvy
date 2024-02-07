@@ -21,21 +21,21 @@ Comment.init(
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                len: [1]
+                len: [1] // Validation to ensure the comment content is at least one character long
             }
         },
         created_at: {
             type: DataTypes.DATE,
             allowNull: false,
-            defaultValue: DataTypes.NOW,
+            defaultValue: DataTypes.NOW, // Default value for 'created_at' is the current timestamp
         },
         // Defining the 'user_id' attribute as an integer and setting up a foreign key relationship with the 'user' model
         user_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
             references: {
-                model: 'user',
-                key: 'user_id'
+                model: 'user', // Referencing the 'user' model
+                key: 'user_id' // Referencing the 'user_id' attribute in the 'user' model
             },
         },
         // Defining the 'post_id' attribute as an integer and setting up a foreign key relationship with the 'post' model
@@ -43,8 +43,8 @@ Comment.init(
             type: DataTypes.INTEGER,
             allowNull: false,
             references: {
-                model: 'post',
-                key: 'post_id',
+                model: 'post', // Referencing the 'post' model
+                key: 'post_id', // Referencing the 'post_id' attribute in the 'post' model
             },
         },
     },

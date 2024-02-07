@@ -5,85 +5,86 @@ const withAuth = require('../utils/auth'); // Importing authentication middlewar
 
 // get all posts
 router.get('/', withAuth, (req, res) => {
+    // Retrieve all posts with associated user and comments for the logged-in user
     Post.findAll({
-      where: {
-        user_id: req.session.user_id
-      },
-      attributes: ['post_id', 'post_title', 'post_content', 'created_at'],
-      order: [['created_at', 'DESC']],
-      include: [
-        {
-          model: User,
-          attributes: ['username']
+        where: {
+            user_id: req.session.user_id
         },
-        {
-          model: Comment,
-          attributes: ['comment_id', 'comment_content', 'post_id', 'user_id', 'created_at'],
-          include: {
-            model: User,
-            attributes: ['username']
-          }
-        }
-      ]
+        attributes: ['post_id', 'post_title', 'post_content', 'created_at'],
+        order: [['created_at', 'DESC']],
+        include: [
+            {
+                model: User,
+                attributes: ['username']
+            },
+            {
+                model: Comment,
+                attributes: ['comment_id', 'comment_content', 'post_id', 'user_id', 'created_at'],
+                include: {
+                    model: User,
+                    attributes: ['username']
+                }
+            }
+        ]
     })
-    .then(dbPostData => {
-      //serialize the data before passing to the template
-      const posts = dbPostData.map(post => post.get({ plain: true }));
-      res.render('dashboard', { posts, loggedIn: true });
-    })
-    .catch(err => {
-      console.log(err);
-      res.status(500).json(err);
-    });
-  });
+        .then(dbPostData => {
+            // Serialize the data before passing to the template
+            const posts = dbPostData.map(post => post.get({ plain: true }));
+            res.render('dashboard', { posts, loggedIn: true });
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json(err);
+        });
+});
 
 // get a specific Post by ID
 router.get('/edit/:id', (req, res) => {
     // Retrieve a specific post by ID with associated user and comments
     Post.findOne({
-      where: {
-        post_id: req.params.id
-      },
-      attributes: ['post_id', 'post_title', 'post_content', 'created_at'],
-      include: [
-        {
-          model: User, // Include the User model to get information about the author
-          attributes: ['username']
+        where: {
+            post_id: req.params.id
         },
-        {
-          model: Comment, // Include the Comment model to get associated comments
-          attributes: ['comment_id', 'comment_content', 'post_id', 'user_id', 'created_at'],
-          include: {
-            model: User, // Include the User model for each comment to get the username
-            attributes: ['username']
-          }
-        }
-      ]
+        attributes: ['post_id', 'post_title', 'post_content', 'created_at'],
+        include: [
+            {
+                model: User, // Include the User model to get information about the author
+                attributes: ['username']
+            },
+            {
+                model: Comment, // Include the Comment model to get associated comments
+                attributes: ['comment_id', 'comment_content', 'post_id', 'user_id', 'created_at'],
+                include: {
+                    model: User, // Include the User model for each comment to get the username
+                    attributes: ['username']
+                }
+            }
+        ]
     })
-    .then(dbPostData => {
-        if (!dbPostData) {
-          res.status(404).json({ message: 'No post found with this id' });
-          return;
-        }
-        //serialize the data
-        const post = dbPostData.get({ plain: true });
-        // pass to the template
-        res.render('changePost', {
-          post,
-          loggedIn: req.session.loggedIn
+        .then(dbPostData => {
+            if (!dbPostData) {
+                res.status(404).json({ message: 'No post found with this id' });
+                return;
+            }
+            // Serialize the data
+            const post = dbPostData.get({ plain: true });
+            // Pass to the template
+            res.render('changePost', {
+                post,
+                loggedIn: req.session.loggedIn
+            });
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json(err);
         });
-      })
-      .catch(err => {
-        console.log(err);
-        res.status(500).json(err);
-      });
-  });
+});
 
 // Dashboard route /dashboard. Access is restricted by middleware to logged-in users only
 router.get('/', withAuth, async (req, res) => {
     try {
         console.log(req.session)
-        // Get all Post posts created by the logged-in user
+        // Get all posts created by the logged-in user
         const postData = await Post.findAll({
             where: {
                 user_id: req.session.user_id,
@@ -98,7 +99,7 @@ router.get('/', withAuth, async (req, res) => {
 
         // Serialize data so the template can read it
         const posts = postData.map((post) => post.get({ plain: true }));
-        console.log(posts)    
+        console.log(posts)
         // Pass serialized data and session flag into the template
         res.render('dashboard', {
             posts,
@@ -146,7 +147,7 @@ router.delete('/:id', withAuth, async (req, res) => {
             },
         });
 
-        // Send appropriate response based on the success of the deletion
+        // Send an appropriate response based on the success of the deletion
         if (affectedRows > 0) {
             res.status(200).end(); // Successful deletion
         } else {
